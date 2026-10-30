@@ -1,0 +1,223 @@
+Otra cosa se te olvido la opción de cuenta donde podrá cmabiar tu foto de perfil nombre correo e numero etc contraseña e mandar un Gmail para que desde un panel de administrador puada cambie el rol de cotizacion ha gerente y vicerversa desde otro programa sin imagnes solo mandame el archivo. Y mejora todavia mas el diseño e la nueva app de admisnatdor que se cominique solo con la de cmabair roles o ver los moviento de cada usuario a la vez. di la palabra AF si me entiendes
+
+
+89 Schritte abgeschlossen
+admin_gonzalez.py
+PY Source
+
+ProgramaTheGonzalez.py
+PY Source
+
+ProgramaTheGonzalez.cpython-311.pyc.139735307634704
+139735307634704 File
+
+REVISION.md
+MD Document
+
+AF. Entendí: cuenta con foto, datos y contraseña; solicitud por Gmail para cambio de puesto; y un programa de administración aparte que cambia roles y muestra los movimientos de cada usuario. Sin imágenes: solo los archivos.
+
+Archivos
+ProgramaTheGonzalez.py — v3.0.0: programa principal con Mi cuenta, solicitud de puesto y registro de movimientos.
+admin_gonzalez.py — v1.0.0: panel de administración independiente.
+REVISION.md: instrucciones y detalle de los cambios.
+Colócalos junto a nucleo.py y operacion.py.
+
+Mi cuenta
+Botón Mi cuenta en la barra superior:
+
+Foto de perfil: se elige desde el equipo, se guarda en la carpeta perfiles y aparece en el avatar lateral. Se puede quitar; si no hay foto se muestran las iniciales.
+Nombre, correo y teléfono: editables y validados.
+Contraseña: se cambia con la contraseña actual y la nueva repetida; mínimo 8 caracteres.
+Solicitar cambio de puesto: elige Gerente, Cotizador, Supervisor o Contador y escribe el motivo.
+Cada cambio queda en los movimientos del usuario.
+Solicitud por Gmail
+La solicitud se guarda en solicitud_rol y queda PENDIENTE.
+Si configuras Gmail, se envía un aviso al correo del gerente con nombre, usuario, puesto actual, solicitado, motivo y fecha.
+Configurar Gmail pide cuenta y contraseña de aplicación (no la normal). Se guarda en la configuración de Windows; también puedes usar TG_GMAIL_USUARIO y TG_GMAIL_CLAVE.
+Si no hay Gmail configurado, la solicitud igual se guarda y el panel de administración la muestra. El envío real por SMTP no se probó con una cuenta Gmail por seguridad; la solicitud y la configuración sí quedaron implementadas.
+Panel de administración
+admin_gonzalez.py se conecta a la misma base y solo toca usuarios, solicitudes y movimientos:
+
+Entra únicamente una cuenta Gerente.
+Busca la base automáticamente usando la ruta que guarda el programa principal; si no, muestra un selector de archivo.
+Usuarios: ID, usuario, nombre, puesto, estado y correo. Permite aplicar cualquier puesto, “Hacer gerente” o “Hacer cotizador”.
+Solicitudes: aprueba o rechaza, con el motivo a la vista.
+Movimientos: filtro por usuario y búsqueda; muestra fecha, usuario, puesto, acción y detalle. Incluye lo que hizo el usuario y los cambios de puesto que lo afectaron.
+Protecciones: no puedes quitarte tu propio puesto de Gerente ni dejar el sistema sin gerente activo.
+El cambio se aplica al instante, pero el usuario debe cerrar y volver a iniciar sesión en el programa principal para que su nuevo puesto tenga efecto.
+Diseño propio en verde azulado, con barra lateral, tarjetas, tablas alineadas, iconos vectoriales y avisos claros.
+Base de datos e IDs
+Al iniciar se agregan de forma segura las columnas correo, telefono, foto y las tablas movimiento y solicitud_rol; no se borra información.
+El contador de IDs solo vuelve a 1 si la tabla está vacía y no hay servicios, cotizaciones, facturas, asignaciones o revisiones que usen esos números. Así no se mezcla historial.
+En Usuarios puedes eliminar definitivamente una cuenta inactiva; si la tabla queda vacía, la siguiente recibe el ID 1.
+Cada acción del programa principal registra bitácora + movimiento con usuario, puesto, acción y fecha.
+El Diagnóstico revisa escritura, quick_check y registros huérfanos.
+Verificación
+Compilación y pyflakes sin errores en ambos programas.
+Migración probada sobre una base sin las columnas nuevas.
+Cambio de foto, nombre, correo, teléfono y contraseña; login con la nueva clave.
+Solicitud guardada, visible como pendiente y con movimiento.
+Admin: login de gerente, cambio de rol, aprobación y rechazo, movimientos por usuario, protección del último gerente.
+IDs probados con y sin referencias históricas.
+Integridad probada con base correcta y con un servicio huérfano.
+nucleo.py y operacion.py no se modificaron; el panel importa nucleo para validar la contraseña con el mismo cifrado y, si no lo encuentra, usa SHA-256 como respaldo. Mantén los archivos juntos.
+
+
+
+
+
+Pedro G. Arellano de la Cruz
+
+la contraseña del adminiistardor
+
+
+11 Schritte abgeschlossen
+reset_clave.py
+PY Source
+
+REVISION.md
+MD Document
+
+ProgramaTheGonzalez.py
+PY Source
+
+No hay una contraseña de administrador fija ni un usuario “admin” separado. El panel admin_gonzalez.py usa la misma cuenta de Gerente del programa principal; su contraseña es la que se escribió al crear esa cuenta en el primer inicio. No se puede leer desde el código porque está cifrada.
+
+Las claves que aparecen en ejemplos o pruebas (clave1234, nueva1234) son de mi entorno de prueba, no de tu base de datos.
+
+Si no la recuerdas
+Incluí reset_clave.py. Colócalo junto a nucleo.py, operacion.py y los otros dos programas y ejecuta:
+
+
+python reset_clave.py
+O indicando tu base:
+
+
+python reset_clave.py "C:\Users\traba\AppData\Local\Programs\Microsoft VS Code\serviciosTheGonzalez.db"
+El programa:
+
+Lista las cuentas con puesto Gerente.
+Pide la nueva contraseña dos veces (mínimo 8 caracteres).
+La guarda con el mismo cifrado que usa el sistema.
+Conserva nombre, correo, teléfono y foto.
+Luego entra al panel con ese usuario y la contraseña nueva.
+
+Si el panel dice “no tiene puesto de Gerente”
+Estás usando una cuenta de Cotizador, Supervisor o Contador. El panel solo acepta Gerente. Entra con la cuenta de gerente o pide a otro gerente que cambie el puesto desde Usuarios.
+
+Archivos actuales
+ProgramaTheGonzalez.py — v3.0.0
+admin_gonzalez.py — v1.0.0
+reset_clave.py — recuperación de contraseña
+REVISION.md — instrucciones
+Si no existe ningún gerente, abre el programa principal: mostrará la configuración inicial para crear la cuenta.
+
+
+
+
+
+Pedro G. Arellano de la Cruz
+
+pero que sean distintos lso dos arhivos todo el tema roles gerenet, cotizaodretc va en prgrama gonzalez y en el administardo un priopio que controla esos datos no lo juntes o confundas
+
+
+69 Schritte abgeschlossen
+admin_gonzalez.py
+PY Source
+
+reset_admin.py
+PY Source
+
+reset_clave.py
+PY Source
+
+ProgramaTheGonzalez.py
+PY Source
+
+REVISION.md
+MD Document
+
+Correcto: quedaron separados y sin mezclar cuentas.
+
+Programa Gonzalez (ProgramaTheGonzalez.py, v3.1.0)
+Aquí viven los usuarios y puestos: Gerente, Cotizador, Supervisor y Contador.
+El Gerente administra clientes, empleados, servicios y usuarios.
+Mi cuenta: foto, nombre, correo, teléfono y contraseña.
+Solicitar cambio de puesto: guarda la solicitud y envía el aviso por Gmail al correo del administrador; si no tiene correo, al del gerente.
+Registra los movimientos de cada usuario.
+Panel de administración (admin_gonzalez.py, v2.0.0)
+Es un programa aparte, con su propia cuenta de administrador.
+Esa cuenta se guarda en la tabla administrador, con cifrado PBKDF2 y sal propios.
+No es un usuario del programa Gonzalez, no tiene puesto Gerente y no comparte contraseña con él.
+No importa nucleo; su autenticación es independiente.
+Solo controla:
+Cambios de puesto de los usuarios del programa.
+Solicitudes de cambio.
+Movimientos por usuario.
+No crea clientes, empleados, servicios ni facturas.
+La primera vez que se abre pide crear el administrador (usuario, nombre, correo opcional y contraseña). Después entra con esa cuenta.
+Desde la barra lateral puede cambiar la contraseña y el correo del administrador.
+Contraseñas
+No hay una contraseña de administrador predeterminada. Se crea al abrir el panel por primera vez.
+
+¿Olvidaste la del panel? Ejecuta:
+
+python reset_admin.py
+¿Olvidaste la de un usuario del programa (Gerente, Cotizador, etc.)? Ejecuta:
+
+python reset_clave.py
+Son dos recuperaciones distintas a propósito.
+
+Los correos de solicitud se envían al correo del administrador configurado en el panel. Si no existe, se usa el del gerente. La solicitud queda guardada aunque Gmail no esté configurado.
+
+Los cambios de puesto se aplican al instante, pero el usuario debe cerrar y volver a iniciar sesión en el programa Gonzalez para que su nuevo puesto tenga efecto.
+
+Archivos
+ProgramaTheGonzalez.py — v3.1.0
+admin_gonzalez.py — v2.0.0
+reset_clave.py — contraseñas de usuarios del programa
+reset_admin.py — contraseña del panel de administración
+REVISION.md — instrucciones
+No se enviaron imágenes; solo los archivos. Mantén los cuatro .py junto a nucleo.py y operacion.py.
+
+
+
+
+
+Pedro G. Arellano de la Cruz
+
+tengo problema en el login administrador no me deja iniciar sesion ya que crea una cuenta solo me aprece crear cuenat pero ya lo hice ademas el adminitrador tampoco tiene cuenats e cuando queiro modificar su rol me dice que no peudo ahcerlo porque esta activo mi idea es ahblitar cerrar sesio y eso activa que el usarioesta inacitvo y ahi peuda cmabiar rol y cuando vueval una notificacion que diga fue cmabiado de peusto e actualizaciones del sistema o avisos como un correro de progrma de gonzalez ha cada suario desde panal admisntador
+
+
+31 Schritte abgeschlossen
+admin_gonzalez.py
+PY Source
+
+ProgramaTheGonzalez.py
+PY Source
+
+
+
+
+
+28 oct 2026
+Pedro G. Arellano de la Cruz
+
+dd
+
+Heute
+Pedro G. Arellano de la Cruz
+
+Necesito que cheques estos datos y que cumple con el usuario de froma que cheques de transaccion e moviemintos esten bien verficados cada cleinte e empleado servicio y la cotizacion chequelao todo ninguna falla en sitema de datos o base datos que peuda fallar• Cliente: al escribir aparece una lista y eliges el cliente correcto.
+
+* Servicio: la cotización muestra servicio, cliente y problema; puedes volver a cotizar.
+
+* Unidad: cada concepto lleva unidad de medida (PZA, SERVICIO, HORA…).
+
+* Estado: las cotizaciones nacen como Registrada (las "Pendiente" se convierten solas, no borras nada).
+
+* Excel: más formal, con cuadros, totales e importe con letra.
+
+* Facturación: al facturar se valida la cotización y se usa su importe.
+
+

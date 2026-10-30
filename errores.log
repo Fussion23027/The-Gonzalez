@@ -1,0 +1,25 @@
+[2026-10-27 23:28:38] No se pudo completar la acción. Intente de nuevo. Si el problema continúa, avise al administrador.
+too many values to unpack (expected 4)
+
+[2026-10-27 23:34:55] No se pudo completar la acción. Intente de nuevo. Si el problema continúa, avise al administrador.
+ValueError: too many values to unpack (expected 4)
+
+Traceback (most recent call last):
+  File "c:\Users\traba\Downloads\ProgramaTheGonzalez (9).py", line 4884, in ejecutar_db
+    resultado = funcion(con, *args)
+                ^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\traba\Downloads\ProgramaTheGonzalez (9).py", line 1124, in cotizar_db
+    idCot, ruta = op.crear_cotizacion(con, idServicio, idEmpleado, conceptos, tasa)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\traba\Downloads\operacion.py", line 252, in crear_cotizacion
+    [(idCot, d, float(q), float(p), float(i)) for d, q, p, i in conceptos])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\traba\Downloads\operacion.py", line 252, in <listcomp>
+    [(idCot, d, float(q), float(p), float(i)) for d, q, p, i in conceptos])
+                                                  ^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+
+
+[2026-10-30 11:39:50] No se pudo completar la acción. Intente de nuevo. Si el problema continúa, avise al administrador.
+unsupported operand type(s) for +: 'decimal.Decimal' and 'float'
+
